@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<message_catalog package_key="xoopenai" locale="de_DE" charset="ISO-8859-1">
+
+  <msg key="action_close">Thread schließen</msg>
+  <msg key="action_create">Thread erstellen</msg>
+  <msg key="action_edit">Thread bearbeiten</msg>
+  <msg key="action_new">Neuer Thread</msg>
+  <msg key="feature_info_message_transcript">Dieser Thread ist geschlossen. In Zukunft soll hier ein Protokoll der gesendeten Nachrichten angezeigt werden.</msg>
+  <msg key="model">Modell</msg>
+  <msg key="no_threads">Keine Threads vorhanden.</msg>
+  <msg key="pretty_name">OpenAI</msg>
+  <msg key="thread">ChatGPT-Thread</msg>
+  <msg key="threads">Threads</msg>
+</message_catalog>

@@ -1,0 +1,65 @@
+ ::xowiki::Form new \
+     -set anon_instances t\
+     -set do_substitutions 1 \
+     -set form {{
+         <form>
+         <p>@template_file@</p>
+         <p>@index_page@</p>
+         <p>@extra_css@</p>
+         <p>@production_mode@</p>
+         <p>@with_tags@</p>
+         <p>@with_user_tracking@</p>
+         <p>@with_general_comments@</p>
+         <p>@with_notifications@</p>
+         <p>@show_per_object_categories@</p>
+         <p>@with_delicious@</p>
+         <p>@with_digg@</p>
+         <p>@allow_comments@</p>
+         <p>@display_page_order@</p>
+         <p>@include_in_google_sitemap_index@</p>
+         <p>@weblog_page@</p>
+         <p>@security_policy@</p>
+         <p>@tidy@</p>
+         <p>@MenuBar@</p>
+         <p>@MenuBarWithFolder@</p>
+         <p>@MenuBarSymLinks@</p>
+         <p>@use_hstore@</p>
+         <p>@ExtraMenuEntries@</p>
+         </form>
+             } text/html} \
+     -set form_constraints {
+         _title:text
+         _nls_language:omit
+         _page_order:omit
+         _description:hidden
+         _creator:omit
+         _name:text,swa?:hidden,required
+         template_file:default=view-default,swa?:hidden
+         index_page:text,default=en:index,swa?:hidden
+         extra_css:text,swa?:hidden
+         display_page_order:boolean,horizontal=yes,default=t,swa?:hidden
+         production_mode:boolean,horizontal=yes,default=t,swa?:hidden
+         with_tags:boolean,horizontal=yes,default=f,swa?:hidden
+         with_general_comments:boolean,horizontal=yes,default=f,swa?:hidden
+         with_notifications:boolean,horizontal=yes,default=f,swa?:hidden
+         with_user_tracking:boolean,horizontal=yes,default=f,swa?:hidden
+         allow_comments:boolean,horizontal=yes,default=f,swa?:hidden
+         show_per_object_categories:boolean,horizontal=yes,default=f,swa?:hidden
+         with_delicious:boolean,horizontal=yes,default=f,swa?:hidden
+         with_digg:boolean,horizontal=yes,default=f,swa?:hidden
+         security_policy:text,default=::xowiki::policy1,swa?:hidden
+         tidy:boolean,horizontal=yes,default=f,swa?:hidden
+         MenuBar:boolean,horizontal=yes,default=f,swa?:hidden
+         MenuBarWithFolder:boolean,horizontal=yes,default=f,swa?:hidden
+         MenuBarSymLinks:boolean,horizontal=yes,default=t,swa?:hidden
+         use_hstore:boolean,horizontal=yes,default=t,swa?:hidden
+         include_in_google_sitemap_index:boolean,horizontal=yes,default=f,swa?:hidden
+         weblog_page:default=en:weblog,swa?:hidden
+         ExtraMenuEntries:menuentries
+     } \
+     -set name en:parameter.form \
+     -set nls_language en_US \
+     -set text {} \
+     -set title {Parameter Form} \
+     -set publish_status ready
+

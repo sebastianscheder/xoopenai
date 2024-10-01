@@ -1,0 +1,122 @@
+# -*- Tcl -*-
+########################################################################
+# Conversation workflow, designed for interactions with ChatGPT
+# =============================================================
+#
+# Sebastian Scheder, September 2024
+########################################################################
+
+set :fc_repository {
+  {model:openai_model,default=none,label=#xoopenai.model#,help_text=This doesn't do anything yet!!}
+}
+
+
+########################################################################
+#
+# Action definitions
+#
+########################################################################
+
+Action initialize \
+  -next_state initial \
+  -label "#xoopenai.action_new#" \
+  -title "#xoopenai.action_new#"
+
+Action select \
+  -next_state created \
+  -label "#xoopenai.action_create#" \
+  -title "#xoopenai.action_create#"
+
+Action restart \
+  -next_state initial \
+  -label "#xoopenai.action_edit#" \
+  -title "#xoopenai.action_edit#"
+
+Action close \
+  -next_state done \
+  -label "#xoopenai.action_close#" \
+  -title "#xoopenai.action_close#"
+
+
+########################################################################
+#
+# State definitions
+#
+########################################################################
+
+State initial -actions {select} -form en:conversation.form -view_method edit
+
+State created -actions {restart close} -form_loader load_form -view_method edit
+
+State done -actions {} -form_loader load_form -view_method edit
+
+
+########################################################################
+#
+# Helper methods for the workflow container
+#
+########################################################################
+
+
+#
+# Form loader
+#
+:proc load_form {ctx title} {
+  ::xo::cc set_parameter template_file view-conversation
+  set obj [$ctx object]
+  set state [$obj property _state]
+  set text ""
+  append text {
+    <div class="row">
+      <div class="col-lg-2">
+        {{openai-toc -minimal t}}
+      </div>
+      <div class="col-lg-10">
+  }
+  if {$state eq "created"} {
+    append text {
+      {{chatgpt}}
+    }
+  }
+
+  if {$state eq "done"} {
+    append text #xoopenai.feature_info_message_transcript#
+  }
+
+  append text {
+    </div>
+  }
+
+  return [::xowiki::Form new \
+            -destroy_on_cleanup \
+            -set name en:interaction \
+            -form [subst {{<form>$text</form>} text/html}] \
+            -text {} \
+            -anon_instances t \
+            -form_constraints {@categories:off @cr_fields:hidden} \
+         ]
+}
+
+
+########################################################################
+#
+# Object-specific operations
+#
+########################################################################
+
+:object-specific {
+  set ctx [:wf_context]
+  set container [$ctx wf_container]
+  if {$ctx ne $container} {
+    $ctx forward load_form $container %proc $ctx
+  }
+
+  :mixin add ::xoopenai::ConversationManager
+}
+
+#
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 2
+#    indent-tabs-mode: nil
+# End:

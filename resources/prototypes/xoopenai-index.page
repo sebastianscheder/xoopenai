@@ -1,0 +1,8 @@
+::xowiki::Page new -title "Start" -name "en:xoopenai-index" -nls_language en_US -text {
+  {{child-resources
+      -show_types "::xowiki::FormPage" \
+      -publish_status {ready} \
+      -columns {name last_modified mod_user} \
+  }}
+}
+

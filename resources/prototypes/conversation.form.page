@@ -1,0 +1,14 @@
+# -*- tcl -*-
+
+::xowiki::Form new \
+  -name conversation.form \
+  -title "#xoopenai.thread#" \
+  -anon_instances f \
+  -text {} \
+  -form {{<form>
+    <h4>ChatGPT</h4>
+    @model@
+    </form>} text/html } \
+  -form_constraints {
+    {model:}
+  }

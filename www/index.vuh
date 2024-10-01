@@ -1,0 +1,22 @@
+# -*- tcl -*-
+::xoopenai::Package initialize -ad_doc {
+
+  This is the resolver for this package. It turns a request into
+  an object and executes the object with the computed method.
+
+  @author Sebastian Scheder (sebastian.scheder@wu.ac.at)
+  @creation-date August, 2024
+
+} -parameter {
+  {-m view}
+  {-folder_id:integer 0}
+}
+
+::$package_id reply_to_user [::$package_id invoke -method $m]
+ad_script_abort
+
+# Local variables:
+#  mode: tcl
+#  tcl-indent-level: 2
+#  indent-tabs-mode: nil
+# End:
