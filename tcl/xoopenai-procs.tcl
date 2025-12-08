@@ -43,13 +43,33 @@ namespace eval ::xoopenai {
       set project_id    [parameter::get \
                             -package_id ${:package_id} \
                             -parameter openai_project_id]
+      set use_openacs_ollama_p [parameter::get \
+                                    -package_id ${:package_id} \
+                                    -parameter use_openacs_ollama]
 
-      set o [::xoopenai::REST new \
+      #
+      # Declare variabels with defaults
+      #
+      set body {}
+      #
+      # Do we use openacs-ollama?
+      #
+      if {$use_openacs_ollama_p} {
+        set o [::ollama::API new -model "llama3.2:1b" ]
+        lappend body -messages [list \
+                                  [list role user content $content]]
+
+      } else {
+        set o [::xoopenai::REST new \
                 -client_id $client_id \
                 -client_secret $client_secret \
-                -project_id $project_id]
-
-      set r [$o chat -max_tokens 100 -content $content]
+                -project_id $project_id \
+                -endpoint_url $endpoint_url]
+        lappend body "-max_tokens 100 "
+        lappend body [subst { -content $content}]
+      }
+      set cmd "$o chat $body"
+      set r [{*}$cmd]
 
       #
       # Convert the result into a JSON structure and return it
